@@ -1,35 +1,33 @@
+// src/main/java/com/codeTeam_3/controller/CategoryServlet.java
 package com.codeTeam_3.controller;
 
 import com.codeTeam_3.dao.CategoryDao;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
+import com.codeTeam_3.model.Category;
+import com.codeTeam_3.web.LangUtil;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
 
 @WebServlet(urlPatterns = {"/categories"})
 public class CategoryServlet extends HttpServlet {
-    private final CategoryDao categoryDao = new CategoryDao();
+    private final CategoryDao dao = new CategoryDao();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String lang = Optional.ofNullable(req.getParameter("lang")).orElse("vi");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        String lang = LangUtil.resolveLang(req);
         req.setAttribute("lang", lang);
-        req.setAttribute("categories", categoryDao.findAll(lang));
-        req.getRequestDispatcher("/categories.jsp").forward(req, resp);
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String nameVi = req.getParameter("name_vi");
-        String nameEn = req.getParameter("name_en");
-        boolean canBeShipped = "on".equals(req.getParameter("can_ship"));
-        int id = categoryDao.create(canBeShipped);
-        categoryDao.upsertTranslation(id, "vi", nameVi);
-        categoryDao.upsertTranslation(id, "en", nameEn);
-        resp.sendRedirect(req.getContextPath() + "/categories");
+        List<Category> categories = dao.findAll(lang);
+        req.setAttribute("categories", categories);
+
+        req.getRequestDispatcher("/WEB-INF/views/categories.jsp").forward(req, resp);
     }
 }

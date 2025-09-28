@@ -39,7 +39,6 @@ public class CategoryDao {
         }
     }
 
-    // >>> SỬA Ở ĐÂY: trả về (id, name, productCount)
     public List<Category> findAll(String lang) {
         String sql = """
                     SELECT c.ProductCategoryID,

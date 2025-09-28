@@ -5,9 +5,9 @@ import com.codeTeam_3.dao.ProductDao;
 import com.codeTeam_3.model.Category;
 import com.codeTeam_3.model.ProductView;
 
-import jakarta.servlet.ServletException;              // ✅ jakarta.*
-import jakarta.servlet.annotation.WebServlet;        // ✅ jakarta.*
-import jakarta.servlet.http.HttpServlet;             // ✅ jakarta.*
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -23,7 +23,9 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        final String lang = "vi";
+//        final String lang = "vi";
+        String lang = LangUtil.resolveLang(req);     // <-- lấy lang từ param/session/cookie
+
         List<Category> categories = categoryDao.findAll(lang);
 
         Integer catParam = null;
@@ -39,6 +41,6 @@ public class HomeServlet extends HttpServlet {
         req.setAttribute("activeCatId", activeCatId);
         req.setAttribute("products", products);
 
-        req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp); // ✅ đúng đường dẫn
+        req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);
     }
 }

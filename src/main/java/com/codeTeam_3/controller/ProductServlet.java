@@ -4,6 +4,7 @@ package com.codeTeam_3.controller;
 import com.codeTeam_3.dao.ProductDao;
 import com.codeTeam_3.model.ProductView;
 
+import com.codeTeam_3.web.LangUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,8 +22,12 @@ public class ProductServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        final String lang = Optional.ofNullable(req.getParameter("lang")).orElse("vi");
+//        final String lang = Optional.ofNullable(req.getParameter("lang")).orElse("vi");
+//        req.setAttribute("lang", lang);
+
+        String lang = LangUtil.resolveLang(req);
         req.setAttribute("lang", lang);
+
 
         String path = req.getServletPath();
 
@@ -48,7 +53,7 @@ public class ProductServlet extends HttpServlet {
             }
             req.setAttribute("p", pv);
 
-            // ✅ forward tới view trong WEB-INF
+            // forward tới view trong WEB-INF
             req.getRequestDispatcher("/WEB-INF/views/product-detail.jsp").forward(req, resp);
             return;
         }

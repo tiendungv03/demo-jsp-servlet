@@ -1,21 +1,35 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c"   uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt"  %>
+<%@ taglib prefix="t"   tagdir="/WEB-INF/tags"  %>
 <!doctype html>
-<html lang="vi">
-<head><meta charset="utf-8"><title>Danh mục</title></head>
+<html lang="${empty lang ? 'vi' : lang}">
+<head>
+  <meta charset="utf-8">
+  <title><fmt:message key="app.title"/></title>
+</head>
 <body>
-<jsp:include page="/WEB-INF/views/_layout.jspf"/>
+
+<fmt:setLocale value="${empty lang ? 'vi' : lang}"/>
+<fmt:setBundle basename="app_i18n.messages"/>
+
+<%@ include file="/WEB-INF/views/_layout.jspf" %>
+
 <div class="container my-4">
-  <h4 class="mb-3">Danh mục</h4>
+  <h4 class="mb-3"><fmt:message key="categories.title"/></h4>
+
   <c:choose>
     <c:when test="${empty categories}">
-      <div class="alert alert-info">Chưa có danh mục.</div>
+      <div class="alert alert-info"><fmt:message key="categories.empty"/></div>
     </c:when>
     <c:otherwise>
       <ul class="list-group bg-white rounded-4">
         <c:forEach var="citem" items="${categories}">
-          <li class="list-group-item d-flex justify-content-between">
-            <span>${citem.name}</span>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <!-- bấm vào danh mục -> về trang Home lọc theo cat -->
+            <a class="text-decoration-none" href="<t:urlWithLang value='/home?cat=${citem.id}'/>">
+              ${citem.name}
+            </a>
             <span class="badge text-bg-secondary">${citem.productCount}</span>
           </li>
         </c:forEach>
@@ -23,4 +37,5 @@
     </c:otherwise>
   </c:choose>
 </div>
-</body></html>
+</body>
+</html>

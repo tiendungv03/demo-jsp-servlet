@@ -1,31 +1,24 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c"   uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt"  %>
+<%@ taglib prefix="t"   tagdir="/WEB-INF/tags"  %>
 <!doctype html>
-<html lang="vi">
-<head><meta charset="utf-8"><title>Shop Demo</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-  body{background:#f8fafc}.card{border:none;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,.06)}
-  .muted{color:#64748b}
-</style>
-</head>
+<html lang="${empty lang ? 'vi' : lang}">
+<head><meta charset="utf-8"><title><fmt:message key="app.title"/></title></head>
 <body>
-<nav class="navbar bg-white border-bottom sticky-top">
-  <div class="container">
-    <a class="navbar-brand fw-semibold" href="${pageContext.request.contextPath}/home">Shop Demo</a>
-  </div>
-</nav>
+<fmt:setLocale value="${empty lang ? 'vi' : lang}"/>
+<fmt:setBundle basename="app_i18n.messages"/>
+<%@ include file="/WEB-INF/views/_layout.jspf" %>
 
 <div class="container my-4">
   <div class="row g-4">
     <div class="col-lg-3">
       <div class="bg-white p-3 rounded-4 shadow-sm">
-        <h6 class="mb-3">Danh mục</h6>
+        <h6 class="mb-3"><fmt:message key="home.categories"/></h6>
         <div class="list-group list-group-flush">
           <c:forEach var="citem" items="${categories}">
             <a class="list-group-item ${citem.id == activeCatId ? 'active' : ''}"
-               href="${pageContext.request.contextPath}/home?cat=${citem.id}">
+               href="<t:urlWithLang value='/home?cat=${citem.id}'/>">
               <div class="d-flex justify-content-between">
                 <span>${citem.name}</span>
                 <span class="badge text-bg-secondary">${citem.productCount}</span>
@@ -37,10 +30,10 @@
     </div>
 
     <div class="col-lg-9">
-      <h5 class="mb-3">Sản phẩm</h5>
+      <h5 class="mb-3"><fmt:message key="home.title"/></h5>
       <c:choose>
         <c:when test="${empty products}">
-          <div class="alert alert-warning">Chưa có sản phẩm trong danh mục này.</div>
+          <div class="alert alert-warning">No items.</div>
         </c:when>
         <c:otherwise>
           <div class="row g-4">
@@ -49,7 +42,7 @@
                 <div class="card h-100">
                   <div class="card-body">
                     <h6 class="card-title mb-1">${p.name}</h6>
-                    <div class="muted small mb-2">Mã: #${p.id}</div>
+                    <div class="muted small mb-2">#${p.id}</div>
                     <p class="muted" style="min-height:40px;"><c:out value="${p.description}"/></p>
                     <div class="d-flex justify-content-between">
                       <strong>₫${p.price}</strong>
@@ -58,8 +51,8 @@
                   </div>
                   <div class="card-footer bg-white">
                     <a class="btn btn-sm btn-primary w-100"
-                       href="${pageContext.request.contextPath}/products/detail?id=${p.id}">
-                      Xem chi tiết
+                       href="<t:urlWithLang value='/products/detail?id=${p.id}'/>">
+                      <fmt:message key="btn.details"/>
                     </a>
                   </div>
                 </div>
@@ -72,4 +65,3 @@
   </div>
 </div>
 </body></html>
-
