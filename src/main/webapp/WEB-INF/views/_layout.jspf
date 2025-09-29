@@ -22,7 +22,7 @@
         <fmt:message key="nav.categories"/>
       </a>
 
-      <!-- Dropdown chọn ngôn ngữ -->
+      <!-- chọn ngôn ngữ -->
       <div class="dropdown">
         <a class="btn btn-sm btn-outline-secondary dropdown-toggle"
            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -30,6 +30,7 @@
           <c:choose>
             <c:when test="${lang=='vi'}"><fmt:message key="lang.vi"/></c:when>
             <c:when test="${lang=='en'}"><fmt:message key="lang.en"/></c:when>
+            <c:when test="${lang=='ja'}"><fmt:message key="lang.ja"/></c:when>
             <c:otherwise>${lang}</c:otherwise>
           </c:choose>
         </a>
@@ -44,6 +45,11 @@
                <fmt:message key="lang.en"/>
             </a>
           </li>
+          <li>
+                      <a class="dropdown-item" href="<t:urlWithLang value='/home?lang=ja'/>">
+                         <fmt:message key="lang.ja"/>
+                      </a>
+                    </li>
         </ul>
       </div>
 
