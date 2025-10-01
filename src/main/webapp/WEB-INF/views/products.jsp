@@ -49,6 +49,21 @@
                  href="<t:urlWithLang value='/products/detail?id=${p.id}'/>">
                 <fmt:message key="btn.details"/>
               </a>
+              <!-- Nút Sửa -->
+                <a class="btn btn-sm btn-outline-secondary"
+                   href="<t:urlWithLang value='/products/edit?id=${p.id}'/>">
+                  <fmt:message key="btn.edit"/>
+                </a>
+
+                <!-- Nút Xóa -->
+                <form method="post"
+                      action="<t:urlWithLang value='/products/delete'/>"
+                      style="display:inline"
+                      onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm #${p.id}?');">
+                  <input type="hidden" name="id" value="${p.id}"/>
+                  <button class="btn btn-sm btn-outline-danger">
+                    <fmt:message key="btn.delete"/>
+                  </button>
             </td>
           </tr>
         </c:forEach>

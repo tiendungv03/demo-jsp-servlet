@@ -120,4 +120,57 @@ public class ProductDao {
         }
     }
 
+
+
+    public boolean deleteById(int id) {
+        String delTr = "DELETE FROM ProductTranslation WHERE ProductID = ?";
+        String delPd = "DELETE FROM Product WHERE ProductID = ?";
+        try (Connection c = dbMysql.getConnection()) {
+            c.setAutoCommit(false);
+            try (PreparedStatement p1 = c.prepareStatement(delTr);
+                 PreparedStatement p2 = c.prepareStatement(delPd)) {
+                p1.setInt(1, id);
+                p1.executeUpdate();
+                p2.setInt(1, id);
+                int rows = p2.executeUpdate();
+                c.commit();
+                return rows > 0;
+            } catch (Exception ex) {
+                c.rollback();
+                throw ex;
+            } finally {
+                c.setAutoCommit(true);
+            }
+        } catch (Exception e) { throw new RuntimeException(e); }
+    }
+
+    public void updateCore(int id, java.math.BigDecimal price, java.math.BigDecimal weight, int categoryId) {
+        String sql = "UPDATE Product SET Price=?, Weight=?, ProductCategoryID=? WHERE ProductID=?";
+        try (Connection c = dbMysql.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setBigDecimal(1, price);
+            ps.setBigDecimal(2, weight);
+            ps.setInt(3, categoryId);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+        } catch (Exception e) { throw new RuntimeException(e); }
+    }
+
+    public void upsertTranslation(int productId, String lang, String name, String desc) {
+        String sql = """
+      INSERT INTO ProductTranslation(ProductID, LanguageID, ProductName, ProductDescription)
+      VALUES(?,?,?,?)
+      ON DUPLICATE KEY UPDATE ProductName=VALUES(ProductName), ProductDescription=VALUES(ProductDescription)
+    """;
+        try (Connection c = dbMysql.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ps.setString(2, lang);
+            ps.setString(3, name);
+            ps.setString(4, desc);
+            ps.executeUpdate();
+        } catch (Exception e) { throw new RuntimeException(e); }
+    }
+
+
 }

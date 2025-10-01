@@ -2,12 +2,12 @@
 <%@ taglib prefix="c"   uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt"  %>
 <%@ taglib prefix="t"   tagdir="/WEB-INF/tags"  %>
+<fmt:setLocale value="${empty lang ? 'vi' : lang}"/>
+<fmt:setBundle basename="app_i18n.messages"/>
 <!doctype html>
 <html lang="${empty lang ? 'vi' : lang}">
 <head><meta charset="utf-8"><title><fmt:message key="app.title"/></title></head>
 <body>
-<fmt:setLocale value="${empty lang ? 'vi' : lang}"/>
-<fmt:setBundle basename="app_i18n.messages"/>
 <%@ include file="/WEB-INF/views/_layout.jspf" %>
 
 <div class="container my-4">

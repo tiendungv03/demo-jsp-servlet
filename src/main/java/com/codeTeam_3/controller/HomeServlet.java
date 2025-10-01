@@ -1,10 +1,11 @@
-package com.codeTeam_3.web;
+package com.codeTeam_3.controller;
 
 import com.codeTeam_3.dao.CategoryDao;
 import com.codeTeam_3.dao.ProductDao;
 import com.codeTeam_3.model.Category;
 import com.codeTeam_3.model.ProductView;
 
+import com.codeTeam_3.web.LangUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,7 +25,7 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
 
 //        final String lang = "vi";
-        String lang = LangUtil.resolveLang(req);     // <-- lấy lang từ param/session/cookie
+        String lang = LangUtil.resolveLang(req);     // <param/session/cookie
 
         List<Category> categories = categoryDao.findAll(lang);
 

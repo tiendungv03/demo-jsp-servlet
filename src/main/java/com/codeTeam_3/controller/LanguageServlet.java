@@ -1,5 +1,5 @@
 // src/main/java/com/codeTeam_3/web/LanguageServlet.java
-package com.codeTeam_3.web;
+package com.codeTeam_3.controller;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;

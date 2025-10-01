@@ -1,13 +1,13 @@
 USE team3;
 
 -- XÓA SẠCH (giữ schema)
---SET FOREIGN_KEY_CHECKS = 0;
---TRUNCATE TABLE ProductTranslation;
---TRUNCATE TABLE Product;
---TRUNCATE TABLE ProductCategoryTranslation;
---TRUNCATE TABLE ProductCategory;
---TRUNCATE TABLE Language;
---SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE ProductTranslation;
+TRUNCATE TABLE Product;
+TRUNCATE TABLE ProductCategoryTranslation;
+TRUNCATE TABLE ProductCategory;
+TRUNCATE TABLE Language;
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- Ngôn ngữ
 INSERT INTO Language(LanguageID, Language) VALUES
