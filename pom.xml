@@ -25,6 +25,12 @@
           <artifactId>jakarta.servlet.jsp.jstl</artifactId>
           <version>3.0.1</version>
       </dependency>
+      <dependency>
+          <groupId>jakarta.servlet</groupId>
+          <artifactId>jakarta.servlet-api</artifactId>
+          <version>6.0.0</version>   <!-- hoặc 6.1.x nếu dùng Tomcat mới -->
+          <scope>provided</scope>
+      </dependency>
 
 
       <dependency>
