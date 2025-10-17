@@ -8,6 +8,12 @@
   <name>demo_JSP-Servlet Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
+      <!-- HikariCP (connection pool) -->
+      <dependency>
+          <groupId>com.zaxxer</groupId>
+          <artifactId>HikariCP</artifactId>
+          <version>5.1.0</version><!-- dùng version mới; có thể kiểm tra trên Maven Central -->
+      </dependency>
 
       <dependency>
           <groupId>jakarta.servlet.jsp.jstl</groupId>
