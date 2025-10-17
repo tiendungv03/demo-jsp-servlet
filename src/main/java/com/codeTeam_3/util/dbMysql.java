@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 //import org.apache.commons.dbcp2.BasicDataSource;
 //import java.sql.DriverManager;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -12,6 +13,7 @@ public final class dbMysql {
 
     static {
         HikariConfig cfg = new HikariConfig();
+
         cfg.setDriverClassName("com.mysql.cj.jdbc.Driver");
         cfg.setJdbcUrl(System.getenv().getOrDefault(
                 "DB_URL",
@@ -41,6 +43,10 @@ public final class dbMysql {
     }
 
     private dbMysql() {}
+
+    public static DataSource getDataSource() {
+        return DS;
+    }
 
     public static Connection getConnection() throws SQLException {
         return DS.getConnection();
